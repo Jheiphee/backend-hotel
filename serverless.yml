@@ -29,36 +29,30 @@ functions:
       - httpApi:
           path: /rooms
           method: GET
-
   getRoomById:
     handler: functions/rooms/getRoomById.handler
     events:
       - httpApi:
           path: /rooms/{id}
           method: GET
-
   createRoom:
     handler: functions/rooms/createRoom.handler
     events:
       - httpApi:
           path: /rooms
           method: POST
-
   updateRoom:
     handler: functions/rooms/updateRoom.handler
     events:
       - httpApi:
           path: /rooms/{id}
           method: PUT
-
   deleteRoom:
     handler: functions/rooms/deleteRoom.handler
     events:
       - httpApi:
           path: /rooms/{id}
           method: DELETE
-
-
   # 🟣 PROFILES
   getProfiles:
     handler: functions/profiles/getProfiles.handler
@@ -66,36 +60,30 @@ functions:
       - httpApi:
           path: /profiles
           method: GET
-
   getProfileById:
     handler: functions/profiles/getProfileById.handler
     events:
       - httpApi:
           path: /profiles/{id}
           method: GET
-
   createProfile:
     handler: functions/profiles/createProfile.handler
     events:
       - httpApi:
           path: /profiles
           method: POST
-
   updateProfile:
     handler: functions/profiles/updateProfile.handler
     events:
       - httpApi:
           path: /profiles/{id}
           method: PUT
-
   deleteProfile:
     handler: functions/profiles/deleteProfile.handler
     events:
       - httpApi:
           path: /profiles/{id}
           method: DELETE
-
-
   # 🟠 GUESTS
   getGuests:
     handler: functions/guests/getGuests.handler
@@ -103,36 +91,30 @@ functions:
       - httpApi:
           path: /guests
           method: GET
-
   getGuestById:
     handler: functions/guests/getGuestById.handler
     events:
       - httpApi:
           path: /guests/{id}
           method: GET
-
   createGuest:
     handler: functions/guests/createGuest.handler
     events:
       - httpApi:
           path: /guests
           method: POST
-
   updateGuest:
     handler: functions/guests/updateGuest.handler
     events:
       - httpApi:
           path: /guests/{id}
           method: PUT
-
   deleteGuest:
     handler: functions/guests/deleteGuest.handler
     events:
       - httpApi:
           path: /guests/{id}
           method: DELETE
-
-
   # 🔵 BOOKINGS
   getBookings:
     handler: functions/bookings/getBookings.handler
@@ -140,36 +122,30 @@ functions:
       - httpApi:
           path: /bookings
           method: GET
-
   getBookingById:
     handler: functions/bookings/getBookingById.handler
     events:
       - httpApi:
           path: /bookings/{id}
           method: GET
-
   createBooking:
     handler: functions/bookings/createBooking.handler
     events:
       - httpApi:
           path: /bookings
           method: POST
-
   updateBooking:
     handler: functions/bookings/updateBooking.handler
     events:
       - httpApi:
           path: /bookings/{id}
           method: PUT
-
   deleteBooking:
     handler: functions/bookings/deleteBooking.handler
     events:
       - httpApi:
           path: /bookings/{id}
           method: DELETE
-
-
   # 🟡 PAYMENTS
   getPayments:
     handler: functions/payments/getPayments.handler
@@ -177,36 +153,30 @@ functions:
       - httpApi:
           path: /payments
           method: GET
-
   getPaymentById:
     handler: functions/payments/getPaymentById.handler
     events:
       - httpApi:
           path: /payments/{id}
           method: GET
-
   createPayment:
     handler: functions/payments/createPayment.handler
     events:
       - httpApi:
           path: /payments
           method: POST
-
   updatePayment:
     handler: functions/payments/updatePayment.handler
     events:
       - httpApi:
           path: /payments/{id}
           method: PUT
-
   deletePayment:
     handler: functions/payments/deletePayment.handler
     events:
       - httpApi:
           path: /payments/{id}
           method: DELETE
-
-
   # 🟤 EMPLOYMENT
   getEmployment:
     handler: functions/employment/getEmployment.handler
@@ -214,15 +184,12 @@ functions:
       - httpApi:
           path: /employment
           method: GET
-
   searchEmployment:
     handler: functions/employment/searchEmployment.handler
     events:
       - httpApi:
           path: /employment/search
           method: GET
-
-
   # 🔴 ANALYTICS
   bestRoomBookings:
     handler: functions/analytics/bestRoomBookings.handler
@@ -230,42 +197,36 @@ functions:
       - httpApi:
           path: /analytics/best-room-bookings
           method: GET
-
   bestRoomRevenue:
     handler: functions/analytics/bestRoomRevenue.handler
     events:
       - httpApi:
           path: /analytics/best-room-revenue
           method: GET
-
   topBookingDate:
     handler: functions/analytics/topBookingDate.handler
     events:
       - httpApi:
           path: /analytics/top-booking-date
           method: GET
-
   topGuestPayment:
     handler: functions/analytics/topGuestPayment.handler
     events:
       - httpApi:
           path: /analytics/top-guest-payment
           method: GET
-
   topRevenueDate:
     handler: functions/analytics/topRevenueDate.handler
     events:
       - httpApi:
           path: /analytics/top-revenue-date
           method: GET
-
   getMembers:
     handler: functions/analytics/getMembers.handler
     events:
       - httpApi:
           path: /analytics/members
           method: GET
-
   getMembersCount:
     handler: functions/analytics/getMembersCount.handler
     events:
