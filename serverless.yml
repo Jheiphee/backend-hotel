@@ -6,6 +6,7 @@ provider:
   name: aws
   runtime: nodejs20.x
   region: ap-southeast-1
+  stage: dev
 
   environment:
     DB_HOST: ${env:DB_HOST}
@@ -14,67 +15,15 @@ provider:
     DB_NAME: ${env:DB_NAME}
     DB_PORT: ${env:DB_PORT}
 
+  logs:
+    httpApi: true
+
 package:
   individually: true
 
 functions:
 
-  # =========================
-  # 🔥 ANALYTICS
-  # =========================
-  bestRoomBookings:
-    handler: functions/analytics/bestRoomBookings.handler
-    events:
-      - httpApi:
-          path: /analytics/best-room-bookings
-          method: GET
-
-  bestRoomRevenue:
-    handler: functions/analytics/bestRoomRevenue.handler
-    events:
-      - httpApi:
-          path: /analytics/best-room-revenue
-          method: GET
-
-  topGuestPayment:
-    handler: functions/analytics/topGuestPayment.handler
-    events:
-      - httpApi:
-          path: /analytics/top-guest-payment
-          method: GET
-
-  topBookingDate:
-    handler: functions/analytics/topBookingDate.handler
-    events:
-      - httpApi:
-          path: /analytics/top-booking-date
-          method: GET
-
-  topRevenueDate:
-    handler: functions/analytics/topRevenueDate.handler
-    events:
-      - httpApi:
-          path: /analytics/top-revenue-date
-          method: GET
-
-  getMembers:
-    handler: functions/analytics/getMembers.handler
-    events:
-      - httpApi:
-          path: /analytics/members
-          method: GET
-
-  getMembersCount:
-    handler: functions/analytics/getMembersCount.handler
-    events:
-      - httpApi:
-          path: /analytics/members-count
-          method: GET
-
-
-  # =========================
-  # 🏨 ROOMS
-  # =========================
+  # 🟢 ROOMS
   getRooms:
     handler: functions/rooms/getRooms.handler
     events:
@@ -82,11 +31,11 @@ functions:
           path: /rooms
           method: GET
 
-  getRoomByNumber:
-    handler: functions/rooms/getRoomByNumber.handler
+  getRoomById:
+    handler: functions/rooms/getRoomById.handler
     events:
       - httpApi:
-          path: /rooms/{room_number}
+          path: /rooms/{id}
           method: GET
 
   createRoom:
@@ -100,127 +49,17 @@ functions:
     handler: functions/rooms/updateRoom.handler
     events:
       - httpApi:
-          path: /rooms/{room_number}
+          path: /rooms/{id}
           method: PUT
 
   deleteRoom:
     handler: functions/rooms/deleteRoom.handler
     events:
       - httpApi:
-          path: /rooms/{room_number}
+          path: /rooms/{id}
           method: DELETE
 
-
-  # =========================
-  # 📅 BOOKINGS
-  # =========================
-  getBookings:
-    handler: functions/bookings/getBookings.handler
-    events:
-      - httpApi:
-          path: /bookings
-          method: GET
-
-  createBooking:
-    handler: functions/bookings/createBooking.handler
-    events:
-      - httpApi:
-          path: /bookings
-          method: POST
-
-  updateBooking:
-    handler: functions/bookings/updateBooking.handler
-    events:
-      - httpApi:
-          path: /bookings/{booking_id}
-          method: PUT
-
-  deleteBooking:
-    handler: functions/bookings/deleteBooking.handler
-    events:
-      - httpApi:
-          path: /bookings/{booking_id}
-          method: DELETE
-
-
-  # =========================
-  # 💳 PAYMENTS
-  # =========================
-  getAllPayments:
-    handler: functions/payments/getAllPayments.handler
-    events:
-      - httpApi:
-          path: /payments
-          method: GET
-
-  getPaymentById:
-    handler: functions/payments/getPaymentById.handler
-    events:
-      - httpApi:
-          path: /payments/{payment_id}
-          method: GET
-
-  getPaymentsByStatus:
-    handler: functions/payments/getPaymentsByStatus.handler
-    events:
-      - httpApi:
-          path: /payments/status/{status}
-          method: GET
-
-  getPaymentsByMethod:
-    handler: functions/payments/getPaymentsByMethod.handler
-    events:
-      - httpApi:
-          path: /payments/method/{method}
-          method: GET
-
-  createPayment:
-    handler: functions/payments/createPayment.handler
-    events:
-      - httpApi:
-          path: /payments
-          method: POST
-
-
-  # =========================
-  # 👤 GUESTS
-  # =========================
-  getGuests:
-    handler: functions/guests/getGuests.handler
-    events:
-      - httpApi:
-          path: /guests
-          method: GET
-
-  createGuest:
-    handler: functions/guests/createGuest.handler
-    events:
-      - httpApi:
-          path: /guests
-          method: POST
-
-
-  # =========================
-  # 👔 EMPLOYMENT
-  # =========================
-  getEmployment:
-    handler: functions/employment/getEmployment.handler
-    events:
-      - httpApi:
-          path: /employment
-          method: GET
-
-  searchEmployment:
-    handler: functions/employment/searchEmployment.handler
-    events:
-      - httpApi:
-          path: /employment/search
-          method: GET
-
-
-  # =========================
-  # 🧑‍💼 PROFILES
-  # =========================
+  # 🟣 PROFILES
   getProfiles:
     handler: functions/profiles/getProfiles.handler
     events:
@@ -255,3 +94,176 @@ functions:
       - httpApi:
           path: /profiles/{id}
           method: DELETE
+
+  # 🟠 GUESTS
+  getGuests:
+    handler: functions/guests/getGuests.handler
+    events:
+      - httpApi:
+          path: /guests
+          method: GET
+
+  getGuestById:
+    handler: functions/guests/getGuestById.handler
+    events:
+      - httpApi:
+          path: /guests/{id}
+          method: GET
+
+  createGuest:
+    handler: functions/guests/createGuest.handler
+    events:
+      - httpApi:
+          path: /guests
+          method: POST
+
+  updateGuest:
+    handler: functions/guests/updateGuest.handler
+    events:
+      - httpApi:
+          path: /guests/{id}
+          method: PUT
+
+  deleteGuest:
+    handler: functions/guests/deleteGuest.handler
+    events:
+      - httpApi:
+          path: /guests/{id}
+          method: DELETE
+
+  # 🔵 BOOKINGS
+  getBookings:
+    handler: functions/bookings/getBookings.handler
+    events:
+      - httpApi:
+          path: /bookings
+          method: GET
+
+  getBookingById:
+    handler: functions/bookings/getBookingById.handler
+    events:
+      - httpApi:
+          path: /bookings/{id}
+          method: GET
+
+  createBooking:
+    handler: functions/bookings/createBooking.handler
+    events:
+      - httpApi:
+          path: /bookings
+          method: POST
+
+  updateBooking:
+    handler: functions/bookings/updateBooking.handler
+    events:
+      - httpApi:
+          path: /bookings/{id}
+          method: PUT
+
+  deleteBooking:
+    handler: functions/bookings/deleteBooking.handler
+    events:
+      - httpApi:
+          path: /bookings/{id}
+          method: DELETE
+
+  # 🟡 PAYMENTS
+  getPayments:
+    handler: functions/payments/getPayments.handler
+    events:
+      - httpApi:
+          path: /payments
+          method: GET
+
+  getPaymentById:
+    handler: functions/payments/getPaymentById.handler
+    events:
+      - httpApi:
+          path: /payments/{id}
+          method: GET
+
+  createPayment:
+    handler: functions/payments/createPayment.handler
+    events:
+      - httpApi:
+          path: /payments
+          method: POST
+
+  updatePayment:
+    handler: functions/payments/updatePayment.handler
+    events:
+      - httpApi:
+          path: /payments/{id}
+          method: PUT
+
+  deletePayment:
+    handler: functions/payments/deletePayment.handler
+    events:
+      - httpApi:
+          path: /payments/{id}
+          method: DELETE
+
+  # 🟤 EMPLOYMENT
+  getEmployment:
+    handler: functions/employment/getEmployment.handler
+    events:
+      - httpApi:
+          path: /employment
+          method: GET
+
+  searchEmployment:
+    handler: functions/employment/searchEmployment.handler
+    events:
+      - httpApi:
+          path: /employment/search
+          method: GET
+
+  # 🔴 ANALYTICS
+  bestRoomBookings:
+    handler: functions/analytics/bestRoomBookings.handler
+    events:
+      - httpApi:
+          path: /analytics/best-room-bookings
+          method: GET
+
+  bestRoomRevenue:
+    handler: functions/analytics/bestRoomRevenue.handler
+    events:
+      - httpApi:
+          path: /analytics/best-room-revenue
+          method: GET
+
+  topBookingDate:
+    handler: functions/analytics/topBookingDate.handler
+    events:
+      - httpApi:
+          path: /analytics/top-booking-date
+          method: GET
+
+  topGuestPayment:
+    handler: functions/analytics/topGuestPayment.handler
+    events:
+      - httpApi:
+          path: /analytics/top-guest-payment
+          method: GET
+
+  topRevenueDate:
+    handler: functions/analytics/topRevenueDate.handler
+    events:
+      - httpApi:
+          path: /analytics/top-revenue-date
+          method: GET
+
+  getMembers:
+    handler: functions/analytics/getMembers.handler
+    events:
+      - httpApi:
+          path: /analytics/members
+          method: GET
+
+  getMembersCount:
+    handler: functions/analytics/getMembersCount.handler
+    events:
+      - httpApi:
+          path: /analytics/members-count
+          method: GET
