@@ -1,7 +1,10 @@
 const pool = require('../../config/db');
 
-const updateRoom = async (id, data) => {
+const updateRoom = async (event, context) => {
   try {
+    const { id } = event.pathParameters;
+    const data = JSON.parse(event.body);
+
     const {
       room_number,
       room_size,
@@ -20,6 +23,10 @@ const updateRoom = async (id, data) => {
     if (check.rows.length === 0) {
       return {
         statusCode: 404,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: JSON.stringify({
           message: 'Room not found'
         }),
@@ -36,6 +43,10 @@ const updateRoom = async (id, data) => {
       if (duplicateCheck.rows.length > 0) {
         return {
           statusCode: 400,
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*"
+          },
           body: JSON.stringify({
             message: 'Room number already exists'
           }),
@@ -70,6 +81,10 @@ const updateRoom = async (id, data) => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({
         message: 'Room updated successfully',
         data: result.rows[0]
@@ -81,6 +96,9 @@ const updateRoom = async (id, data) => {
 
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         message: err.message
       }),
@@ -88,4 +106,4 @@ const updateRoom = async (id, data) => {
   }
 };
 
-module.exports = updateRoom;
+module.exports.handler = updateRoom;

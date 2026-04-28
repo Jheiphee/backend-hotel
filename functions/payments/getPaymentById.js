@@ -1,7 +1,9 @@
 const pool = require('../../config/db');
 
-const getPaymentById = async (id) => {
+const getPaymentById = async (event, context) => {
   try {
+    const { id } = event.pathParameters;
+
     const result = await pool.query(
       `
       SELECT 
@@ -22,6 +24,10 @@ const getPaymentById = async (id) => {
     if (result.rows.length === 0) {
       return {
         statusCode: 404,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: JSON.stringify({
           message: 'Payment not found'
         }),
@@ -30,6 +36,10 @@ const getPaymentById = async (id) => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({
         data: result.rows[0]
       }),
@@ -40,6 +50,9 @@ const getPaymentById = async (id) => {
 
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         message: err.message
       }),
@@ -47,4 +60,4 @@ const getPaymentById = async (id) => {
   }
 };
 
-module.exports = getPaymentById;
+module.exports.handler = getPaymentById;

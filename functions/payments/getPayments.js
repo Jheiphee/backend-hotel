@@ -1,6 +1,6 @@
 const pool = require('../../config/db');
 
-const getPayments = async () => {
+const getPayments = async (event, context) => {
   try {
     const result = await pool.query(`
       SELECT 
@@ -18,6 +18,10 @@ const getPayments = async () => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({
         data: result.rows
       }),
@@ -28,6 +32,9 @@ const getPayments = async () => {
 
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         message: err.message
       }),
@@ -35,4 +42,4 @@ const getPayments = async () => {
   }
 };
 
-module.exports = getPayments;
+module.exports.handler = getPayments;

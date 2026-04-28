@@ -1,6 +1,6 @@
 const pool = require('../../config/db');
 
-const topGuestPayment = async () => {
+const topGuestPayment = async (event, context) => {
   try {
     const result = await pool.query(`
       SELECT 
@@ -18,6 +18,10 @@ const topGuestPayment = async () => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({
         data: result.rows[0] || null
       }),
@@ -26,6 +30,9 @@ const topGuestPayment = async () => {
   } catch (error) {
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         message: error.message
       }),
@@ -33,4 +40,4 @@ const topGuestPayment = async () => {
   }
 };
 
-module.exports = topGuestPayment;
+module.exports.handler = topGuestPayment;

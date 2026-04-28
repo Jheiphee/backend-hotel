@@ -1,7 +1,9 @@
 const pool = require('../../config/db');
 
-const createProfile = async (data) => {
+const createProfile = async (event, context) => {
   try {
+    const data = JSON.parse(event.body);
+
     const {
       first_name,
       last_name,
@@ -16,6 +18,10 @@ const createProfile = async (data) => {
     if (!first_name || !last_name) {
       return {
         statusCode: 400,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: JSON.stringify({
           message: 'first_name and last_name are required'
         }),
@@ -50,6 +56,10 @@ const createProfile = async (data) => {
 
     return {
       statusCode: 201,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({
         message: 'Profile created successfully',
         data: result.rows[0]
@@ -61,6 +71,9 @@ const createProfile = async (data) => {
 
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         message: err.message
       }),
@@ -68,4 +81,4 @@ const createProfile = async (data) => {
   }
 };
 
-module.exports = createProfile;
+module.exports.handler = createProfile;

@@ -1,7 +1,10 @@
 const pool = require('../../config/db');
 
-const updateProfile = async (id, data) => {
+const updateProfile = async (event, context) => {
   try {
+    const { id } = event.pathParameters;
+    const data = JSON.parse(event.body);
+
     const {
       first_name,
       last_name,
@@ -21,6 +24,10 @@ const updateProfile = async (id, data) => {
     if (check.rows.length === 0) {
       return {
         statusCode: 404,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: JSON.stringify({
           message: 'Profile not found'
         }),
@@ -56,6 +63,10 @@ const updateProfile = async (id, data) => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({
         message: 'Profile updated successfully',
         data: result.rows[0]
@@ -67,6 +78,9 @@ const updateProfile = async (id, data) => {
 
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         message: err.message
       }),
@@ -74,4 +88,4 @@ const updateProfile = async (id, data) => {
   }
 };
 
-module.exports = updateProfile;
+module.exports.handler = updateProfile;

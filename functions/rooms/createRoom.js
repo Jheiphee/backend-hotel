@@ -1,7 +1,9 @@
 const pool = require('../../config/db');
 
-const createRoom = async (data) => {
+const createRoom = async (event, context) => {
   try {
+    const data = JSON.parse(event.body);
+
     const {
       room_number,
       room_size,
@@ -15,6 +17,10 @@ const createRoom = async (data) => {
     if (!room_number || !room_size || !price_per_night) {
       return {
         statusCode: 400,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: JSON.stringify({
           message: 'room_number, room_size, and price_per_night are required'
         }),
@@ -30,6 +36,10 @@ const createRoom = async (data) => {
     if (check.rows.length > 0) {
       return {
         statusCode: 400,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: JSON.stringify({
           message: 'Room number already exists'
         }),
@@ -62,6 +72,10 @@ const createRoom = async (data) => {
 
     return {
       statusCode: 201,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({
         message: 'Room created successfully',
         data: result.rows[0]
@@ -73,6 +87,9 @@ const createRoom = async (data) => {
 
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         message: err.message
       }),
@@ -80,4 +97,4 @@ const createRoom = async (data) => {
   }
 };
 
-module.exports = createRoom;
+module.exports.handler = createRoom;

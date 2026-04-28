@@ -1,6 +1,6 @@
 const pool = require('../../config/db');
 
-const topBookingDate = async () => {
+const topBookingDate = async (event, context) => {
   try {
     const result = await pool.query(`
       SELECT 
@@ -14,6 +14,10 @@ const topBookingDate = async () => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({
         data: result.rows[0] || null
       }),
@@ -24,6 +28,9 @@ const topBookingDate = async () => {
 
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         message: err.message
       }),
@@ -31,4 +38,4 @@ const topBookingDate = async () => {
   }
 };
 
-module.exports = topBookingDate;
+module.exports.handler = topBookingDate;

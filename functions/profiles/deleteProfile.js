@@ -1,7 +1,9 @@
 const pool = require('../../config/db');
 
-const deleteProfile = async (id) => {
+const deleteProfile = async (event, context) => {
   try {
+    const { id } = event.pathParameters;
+
     // 🔹 check if exists
     const check = await pool.query(
       `SELECT * FROM profiles WHERE profile_id = $1`,
@@ -11,6 +13,10 @@ const deleteProfile = async (id) => {
     if (check.rows.length === 0) {
       return {
         statusCode: 404,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: JSON.stringify({
           message: 'Profile not found'
         }),
@@ -25,6 +31,10 @@ const deleteProfile = async (id) => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({
         message: 'Profile deleted successfully'
       }),
@@ -35,6 +45,9 @@ const deleteProfile = async (id) => {
 
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         message: err.message
       }),
@@ -42,4 +55,4 @@ const deleteProfile = async (id) => {
   }
 };
 
-module.exports = deleteProfile;
+module.exports.handler = deleteProfile;

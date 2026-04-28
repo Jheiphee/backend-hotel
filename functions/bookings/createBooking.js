@@ -1,7 +1,9 @@
 const pool = require('../../config/db');
 
-const createBooking = async (data) => {
+const createBooking = async (event, context) => {
   try {
+    const data = JSON.parse(event.body);
+
     const {
       guest_id,
       room_id,
@@ -21,6 +23,10 @@ const createBooking = async (data) => {
     if (roomCheck.rows.length === 0) {
       return {
         statusCode: 400,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: JSON.stringify({ message: 'Room does not exist' }),
       };
     }
@@ -41,6 +47,10 @@ const createBooking = async (data) => {
     if (overlapCheck.rows.length > 0) {
       return {
         statusCode: 400,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: JSON.stringify({ message: 'Room already booked for selected dates' }),
       };
     }
@@ -67,6 +77,10 @@ const createBooking = async (data) => {
 
     return {
       statusCode: 201,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({
         message: 'Booking created successfully',
         data: result.rows[0],
@@ -76,6 +90,9 @@ const createBooking = async (data) => {
   } catch (error) {
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         message: error.message,
       }),
@@ -83,4 +100,4 @@ const createBooking = async (data) => {
   }
 };
 
-module.exports = createBooking;
+module.exports.handler = createBooking;

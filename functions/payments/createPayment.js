@@ -1,7 +1,9 @@
 const pool = require('../../config/db');
 
-const createPayment = async (data) => {
+const createPayment = async (event, context) => {
   try {
+    const data = JSON.parse(event.body);
+
     let {
       booking_id,
       payment_type,
@@ -15,6 +17,10 @@ const createPayment = async (data) => {
     if (!booking_id || payment_amount === undefined) {
       return {
         statusCode: 400,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: JSON.stringify({
           message: 'booking_id and payment_amount are required'
         }),
@@ -34,6 +40,10 @@ const createPayment = async (data) => {
     if (bookingCheck.rows.length === 0) {
       return {
         statusCode: 404,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: JSON.stringify({
           message: 'Booking does not exist'
         }),
@@ -94,6 +104,10 @@ const createPayment = async (data) => {
 
     return {
       statusCode: 201,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({
         message: 'Payment created successfully',
         data: result.rows[0]
@@ -105,6 +119,9 @@ const createPayment = async (data) => {
 
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         message: err.message
       }),
@@ -112,4 +129,4 @@ const createPayment = async (data) => {
   }
 };
 
-module.exports = createPayment;
+module.exports.handler = createPayment;

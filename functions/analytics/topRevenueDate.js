@@ -1,6 +1,6 @@
 const pool = require('../../config/db');
 
-const topRevenueDate = async () => {
+const topRevenueDate = async (event, context) => {
   try {
     const result = await pool.query(`
       SELECT payment_date::date AS date,
@@ -13,6 +13,10 @@ const topRevenueDate = async () => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({
         data: result.rows[0] || null
       }),
@@ -21,6 +25,9 @@ const topRevenueDate = async () => {
   } catch (error) {
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         message: error.message
       }),
@@ -28,4 +35,4 @@ const topRevenueDate = async () => {
   }
 };
 
-module.exports = topRevenueDate;
+module.exports.handler = topRevenueDate;

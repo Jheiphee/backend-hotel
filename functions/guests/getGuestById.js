@@ -1,7 +1,9 @@
 const pool = require('../../config/db');
 
-const getGuestById = async (id) => {
+const getGuestById = async (event, context) => {
   try {
+    const { id } = event.pathParameters;
+
     const result = await pool.query(
       `
       SELECT 
@@ -18,6 +20,10 @@ const getGuestById = async (id) => {
     if (result.rows.length === 0) {
       return {
         statusCode: 404,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: JSON.stringify({
           message: 'Guest not found'
         }),
@@ -26,6 +32,10 @@ const getGuestById = async (id) => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({
         data: result.rows[0]
       }),
@@ -36,6 +46,9 @@ const getGuestById = async (id) => {
 
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         message: err.message
       }),
@@ -43,4 +56,4 @@ const getGuestById = async (id) => {
   }
 };
 
-module.exports = getGuestById;
+module.exports.handler = getGuestById;

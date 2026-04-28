@@ -1,7 +1,9 @@
 const pool = require('../../config/db');
 
-const deletePayment = async (id) => {
+const deletePayment = async (event, context) => {
   try {
+    const { id } = event.pathParameters;
+
     const check = await pool.query(
       `SELECT * FROM payments WHERE payment_id = $1`,
       [id]
@@ -10,6 +12,10 @@ const deletePayment = async (id) => {
     if (check.rows.length === 0) {
       return {
         statusCode: 404,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: JSON.stringify({
           message: 'Payment not found'
         }),
@@ -23,6 +29,10 @@ const deletePayment = async (id) => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({
         message: 'Payment deleted successfully'
       }),
@@ -33,6 +43,9 @@ const deletePayment = async (id) => {
 
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         message: err.message
       }),
@@ -40,4 +53,4 @@ const deletePayment = async (id) => {
   }
 };
 
-module.exports = deletePayment;
+module.exports.handler = deletePayment;

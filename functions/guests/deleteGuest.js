@@ -1,7 +1,9 @@
 const pool = require('../../config/db');
 
-const deleteGuest = async (id) => {
+const deleteGuest = async (event, context) => {
   try {
+    const { id } = event.pathParameters;
+
     // 🔹 check if guest exists
     const guestCheck = await pool.query(
       `SELECT 1 FROM guests WHERE guest_id = $1`,
@@ -11,6 +13,10 @@ const deleteGuest = async (id) => {
     if (guestCheck.rows.length === 0) {
       return {
         statusCode: 404,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: JSON.stringify({
           message: 'Guest not found'
         }),
@@ -25,6 +31,10 @@ const deleteGuest = async (id) => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({
         message: 'Guest deleted successfully'
       }),
@@ -35,6 +45,9 @@ const deleteGuest = async (id) => {
 
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         message: err.message
       }),
@@ -42,4 +55,4 @@ const deleteGuest = async (id) => {
   }
 };
 
-module.exports = deleteGuest;
+module.exports.handler = deleteGuest;

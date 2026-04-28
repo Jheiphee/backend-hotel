@@ -1,7 +1,9 @@
 const pool = require('../../config/db');
 
-const deleteBooking = async (booking_id) => {
+const deleteBooking = async (event, context) => {
   try {
+    const { booking_id } = event.pathParameters;
+
     const result = await pool.query(
       'DELETE FROM bookings WHERE booking_id = $1 RETURNING *',
       [booking_id]
@@ -10,6 +12,10 @@ const deleteBooking = async (booking_id) => {
     if (result.rows.length === 0) {
       return {
         statusCode: 404,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: JSON.stringify({
           message: 'Booking not found'
         }),
@@ -18,6 +24,10 @@ const deleteBooking = async (booking_id) => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({
         message: 'Booking deleted successfully',
         data: result.rows[0]
@@ -27,6 +37,9 @@ const deleteBooking = async (booking_id) => {
   } catch (error) {
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         message: error.message
       }),
@@ -34,4 +47,4 @@ const deleteBooking = async (booking_id) => {
   }
 };
 
-module.exports = deleteBooking;
+module.exports.handler = deleteBooking;

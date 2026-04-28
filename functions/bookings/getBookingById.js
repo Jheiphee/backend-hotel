@@ -1,7 +1,9 @@
 const pool = require('../../config/db');
 
-const getBookingById = async (booking_id) => {
+const getBookingById = async (event, context) => {
   try {
+    const { booking_id } = event.pathParameters;
+
     const result = await pool.query(
       'SELECT * FROM bookings WHERE booking_id = $1',
       [booking_id]
@@ -10,6 +12,10 @@ const getBookingById = async (booking_id) => {
     if (result.rows.length === 0) {
       return {
         statusCode: 404,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: JSON.stringify({
           message: 'Booking not found'
         }),
@@ -18,6 +24,10 @@ const getBookingById = async (booking_id) => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({
         data: result.rows[0]
       }),
@@ -26,6 +36,9 @@ const getBookingById = async (booking_id) => {
   } catch (error) {
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         message: error.message
       }),
@@ -33,4 +46,4 @@ const getBookingById = async (booking_id) => {
   }
 };
 
-module.exports = getBookingById;
+module.exports.handler = getBookingById;

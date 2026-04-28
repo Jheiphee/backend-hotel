@@ -1,6 +1,6 @@
 const pool = require('../../config/db');
 
-const getGuests = async () => {
+const getGuests = async (event, context) => {
   try {
     const result = await pool.query(`
       SELECT 
@@ -14,6 +14,10 @@ const getGuests = async () => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({
         data: result.rows
       }),
@@ -24,6 +28,9 @@ const getGuests = async () => {
 
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         message: err.message
       }),
@@ -31,4 +38,4 @@ const getGuests = async () => {
   }
 };
 
-module.exports = getGuests;
+module.exports.handler = getGuests;

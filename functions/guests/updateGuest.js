@@ -1,7 +1,10 @@
 const pool = require('../../config/db');
 
-const updateGuest = async (id, data) => {
+const updateGuest = async (event, context) => {
   try {
+    const { id } = event.pathParameters;
+    const data = JSON.parse(event.body);
+
     const {
       profile_id,
       guest_type,
@@ -17,6 +20,10 @@ const updateGuest = async (id, data) => {
     if (check.rows.length === 0) {
       return {
         statusCode: 404,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: JSON.stringify({
           message: 'Guest not found'
         }),
@@ -33,6 +40,10 @@ const updateGuest = async (id, data) => {
       if (profileCheck.rows.length === 0) {
         return {
           statusCode: 404,
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*"
+          },
           body: JSON.stringify({
             message: 'Profile does not exist'
           }),
@@ -61,6 +72,10 @@ const updateGuest = async (id, data) => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({
         message: 'Guest updated successfully',
         data: result.rows[0]
@@ -72,6 +87,9 @@ const updateGuest = async (id, data) => {
 
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         message: err.message
       }),
@@ -79,4 +97,4 @@ const updateGuest = async (id, data) => {
   }
 };
 
-module.exports = updateGuest;
+module.exports.handler = updateGuest;

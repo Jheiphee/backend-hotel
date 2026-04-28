@@ -1,7 +1,9 @@
 const pool = require('../../config/db');
 
-const searchEmployment = async (keyword) => {
+const searchEmployment = async (event, context) => {
   try {
+    const { keyword } = event.queryStringParameters || {};
+
     const result = await pool.query(
       `
       SELECT 
@@ -23,6 +25,10 @@ const searchEmployment = async (keyword) => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({
         data: result.rows
       }),
@@ -31,6 +37,9 @@ const searchEmployment = async (keyword) => {
   } catch (error) {
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         message: error.message
       }),
@@ -38,4 +47,4 @@ const searchEmployment = async (keyword) => {
   }
 };
 
-module.exports = searchEmployment;
+module.exports.handler = searchEmployment;

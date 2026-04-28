@@ -1,13 +1,19 @@
 const pool = require('../../config/db');
 
-const createGuest = async (data) => {
+const createGuest = async (event, context) => {
   try {
+    const data = JSON.parse(event.body);
+
     const { profile_id, guest_type, is_member } = data;
 
     // 🔹 validation
     if (!profile_id || !guest_type) {
       return {
         statusCode: 400,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: JSON.stringify({
           message: 'profile_id and guest_type are required'
         }),
@@ -21,6 +27,10 @@ const createGuest = async (data) => {
     if (!allowedTypes.includes(normalizedType)) {
       return {
         statusCode: 400,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: JSON.stringify({
           message: 'Invalid guest_type'
         }),
@@ -36,6 +46,10 @@ const createGuest = async (data) => {
     if (profileCheck.rows.length === 0) {
       return {
         statusCode: 404,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: JSON.stringify({
           message: 'Profile does not exist'
         }),
@@ -62,6 +76,10 @@ const createGuest = async (data) => {
 
     return {
       statusCode: 201,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({
         message: 'Guest created successfully',
         data: result.rows[0]
@@ -73,6 +91,9 @@ const createGuest = async (data) => {
 
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         message: err.message
       }),
@@ -80,4 +101,4 @@ const createGuest = async (data) => {
   }
 };
 
-module.exports = createGuest;
+module.exports.handler = createGuest;

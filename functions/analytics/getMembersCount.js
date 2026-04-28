@@ -1,6 +1,6 @@
 const pool = require('../../config/db');
 
-const getMembersCount = async () => {
+const getMembersCount = async (event, context) => {
   try {
     const result = await pool.query(`
       SELECT COUNT(*) AS total_members
@@ -10,6 +10,10 @@ const getMembersCount = async () => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({
         total_members: Number(result.rows[0].total_members)
       }),
@@ -20,6 +24,9 @@ const getMembersCount = async () => {
 
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         message: err.message
       }),
@@ -27,4 +34,4 @@ const getMembersCount = async () => {
   }
 };
 
-module.exports = getMembersCount;
+module.exports.handler = getMembersCount;

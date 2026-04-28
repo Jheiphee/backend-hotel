@@ -1,7 +1,10 @@
 const pool = require('../../config/db');
 
-const updateBooking = async (booking_id, data) => {
+const updateBooking = async (event, context) => {
   try {
+    const { booking_id } = event.pathParameters;
+    const data = JSON.parse(event.body);
+
     const {
       number_of_guests,
       check_in_date,
@@ -23,6 +26,10 @@ const updateBooking = async (booking_id, data) => {
     if (result.rows.length === 0) {
       return {
         statusCode: 404,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: JSON.stringify({
           message: 'Booking not found'
         }),
@@ -31,6 +38,10 @@ const updateBooking = async (booking_id, data) => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({
         message: 'Booking updated successfully',
         data: result.rows[0]
@@ -40,6 +51,9 @@ const updateBooking = async (booking_id, data) => {
   } catch (error) {
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         message: error.message
       }),
@@ -47,4 +61,4 @@ const updateBooking = async (booking_id, data) => {
   }
 };
 
-module.exports = updateBooking;
+module.exports.handler = updateBooking;

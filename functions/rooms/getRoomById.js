@@ -1,7 +1,9 @@
 const pool = require('../../config/db');
 
-const getRoomById = async (id) => {
+const getRoomById = async (event, context) => {
   try {
+    const { id } = event.pathParameters;
+
     const result = await pool.query(
       `SELECT * FROM rooms WHERE room_id = $1`,
       [id]
@@ -10,6 +12,10 @@ const getRoomById = async (id) => {
     if (result.rows.length === 0) {
       return {
         statusCode: 404,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: JSON.stringify({
           message: 'Room not found'
         }),
@@ -18,6 +24,10 @@ const getRoomById = async (id) => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({
         data: result.rows[0]
       }),
@@ -28,6 +38,9 @@ const getRoomById = async (id) => {
 
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         message: err.message
       }),
@@ -35,4 +48,4 @@ const getRoomById = async (id) => {
   }
 };
 
-module.exports = getRoomById;
+module.exports.handler = getRoomById;

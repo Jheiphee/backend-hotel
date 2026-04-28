@@ -1,7 +1,10 @@
 const pool = require('../../config/db');
 
-const updatePayment = async (id, data) => {
+const updatePayment = async (event, context) => {
   try {
+    const { id } = event.pathParameters;
+    const data = JSON.parse(event.body);
+
     let {
       payment_type,
       payment_method,
@@ -19,6 +22,10 @@ const updatePayment = async (id, data) => {
     if (check.rows.length === 0) {
       return {
         statusCode: 404,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: JSON.stringify({
           message: 'Payment not found'
         }),
@@ -60,6 +67,10 @@ const updatePayment = async (id, data) => {
       } else {
         return {
           statusCode: 400,
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*"
+          },
           body: JSON.stringify({
             message: 'Invalid status value'
           }),
@@ -102,6 +113,10 @@ const updatePayment = async (id, data) => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify({
         message: 'Payment updated successfully',
         data: result.rows[0]
@@ -113,6 +128,9 @@ const updatePayment = async (id, data) => {
 
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         message: err.message
       }),
@@ -120,4 +138,4 @@ const updatePayment = async (id, data) => {
   }
 };
 
-module.exports = updatePayment;
+module.exports.handler = updatePayment;
