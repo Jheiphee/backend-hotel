@@ -138,4 +138,6 @@ const updatePayment = async (event, context) => {
   }
 };
 
-module.exports.handler = updatePayment;
+module.exports.handler = async (event) => {
+  return await updatePayment(event);
+};

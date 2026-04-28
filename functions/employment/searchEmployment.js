@@ -47,4 +47,6 @@ const searchEmployment = async (event, context) => {
   }
 };
 
-module.exports.handler = searchEmployment;
+module.exports.handler = async (event) => {
+  return await searchEmployment(event);
+};

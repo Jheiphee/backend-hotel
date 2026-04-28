@@ -106,4 +106,6 @@ const updateRoom = async (event, context) => {
   }
 };
 
-module.exports.handler = updateRoom;
+module.exports.handler = async (event) => {
+  return await updateRoom(event);
+};

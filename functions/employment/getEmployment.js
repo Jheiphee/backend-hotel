@@ -38,4 +38,6 @@ const getEmployment = async (event, context) => {
   }
 };
 
-module.exports.handler = getEmployment;
+module.exports.handler = async (event) => {
+  return await getEmployment(event);
+};

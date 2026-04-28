@@ -38,4 +38,6 @@ const bestRoomRevenue = async (event, context) => {
   }
 };
 
-module.exports.handler = bestRoomRevenue;
+module.exports.handler = async (event) => {
+  return await bestRoomRevenue(event);
+};

@@ -55,4 +55,6 @@ const deleteProfile = async (event, context) => {
   }
 };
 
-module.exports.handler = deleteProfile;
+module.exports.handler = async (event) => {
+  return await deleteProfile(event);
+};

@@ -40,4 +40,6 @@ const topGuestPayment = async (event, context) => {
   }
 };
 
-module.exports.handler = topGuestPayment;
+module.exports.handler = async (event) => {
+  return await topGuestPayment(event);
+};

@@ -53,4 +53,6 @@ const deletePayment = async (event, context) => {
   }
 };
 
-module.exports.handler = deletePayment;
+module.exports.handler = async (event) => {
+  return await deletePayment(event);
+};

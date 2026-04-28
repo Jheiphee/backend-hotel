@@ -38,4 +38,6 @@ const getGuests = async (event, context) => {
   }
 };
 
-module.exports.handler = getGuests;
+module.exports.handler = async (event) => {
+  return await getGuests(event);
+};

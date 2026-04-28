@@ -56,4 +56,6 @@ const getGuestById = async (event, context) => {
   }
 };
 
-module.exports.handler = getGuestById;
+module.exports.handler = async (event) => {
+  return await getGuestById(event);
+};

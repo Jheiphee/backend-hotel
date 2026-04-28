@@ -129,4 +129,6 @@ const createPayment = async (event, context) => {
   }
 };
 
-module.exports.handler = createPayment;
+module.exports.handler = async (event) => {
+  return await createPayment(event);
+};

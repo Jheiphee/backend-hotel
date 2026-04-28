@@ -55,4 +55,6 @@ const deleteGuest = async (event, context) => {
   }
 };
 
-module.exports.handler = deleteGuest;
+module.exports.handler = async (event) => {
+  return await deleteGuest(event);
+};

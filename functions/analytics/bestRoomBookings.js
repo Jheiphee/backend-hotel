@@ -37,5 +37,6 @@ const bestRoomBookings = async (event, context) => {
   }
 };
 
-// ✅ Standard Lambda export
-module.exports.handler = bestRoomBookings;
+module.exports.handler = async (event) => {
+  return await bestRoomBookings(event);
+};

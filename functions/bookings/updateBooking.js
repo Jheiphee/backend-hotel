@@ -61,4 +61,6 @@ const updateBooking = async (event, context) => {
   }
 };
 
-module.exports.handler = updateBooking;
+module.exports.handler = async (event) => {
+  return await updateBooking(event);
+};

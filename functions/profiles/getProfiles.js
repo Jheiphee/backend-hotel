@@ -33,4 +33,6 @@ const getProfiles = async (event, context) => {
   }
 };
 
-module.exports.handler = getProfiles;
+mmodule.exports.handler = async (event) => {
+  return await getProfiles(event);
+};

@@ -60,4 +60,6 @@ const getPaymentById = async (event, context) => {
   }
 };
 
-module.exports.handler = getPaymentById;
+module.exports.handler = async (event) => {
+  return await getPaymentById(event);
+};

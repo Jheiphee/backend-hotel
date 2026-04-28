@@ -42,4 +42,6 @@ const getPayments = async (event, context) => {
   }
 };
 
-module.exports.handler = getPayments;
+module.exports.handler = async (event) => {
+  return await getPayments(event);
+};

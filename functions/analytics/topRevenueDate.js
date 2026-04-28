@@ -35,4 +35,6 @@ const topRevenueDate = async (event, context) => {
   }
 };
 
-module.exports.handler = topRevenueDate;
+module.exports.handler = async (event) => {
+  return await topRevenueDate(event);
+};

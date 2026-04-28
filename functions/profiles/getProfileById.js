@@ -48,4 +48,6 @@ const getProfileById = async (event, context) => {
   }
 };
 
-module.exports.handler = getProfileById;
+module.exports.handler = async (event) => {
+  return await getProfileById(event);
+};

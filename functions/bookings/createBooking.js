@@ -100,4 +100,6 @@ const createBooking = async (event, context) => {
   }
 };
 
-module.exports.handler = createBooking;
+module.exports.handler = async (event) => {
+  return await createBooking(event);
+};

@@ -48,4 +48,6 @@ const getRoomById = async (event, context) => {
   }
 };
 
-module.exports.handler = getRoomById;
+module.exports.handler = async (event) => {
+  return await getRoomById(event);
+};

@@ -88,4 +88,6 @@ const updateProfile = async (event, context) => {
   }
 };
 
-module.exports.handler = updateProfile;
+module.exports.handler = async (event) => {
+  return await updateProfile(event);
+};

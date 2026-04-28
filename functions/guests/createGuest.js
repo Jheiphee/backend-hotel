@@ -101,4 +101,6 @@ const createGuest = async (event, context) => {
   }
 };
 
-module.exports.handler = createGuest;
+module.exports.handler = async (event) => {
+  return await createGuest(event);
+};

@@ -34,4 +34,6 @@ const getMembersCount = async (event, context) => {
   }
 };
 
-module.exports.handler = getMembersCount;
+module.exports.handler = async (event) => {
+  return await getMembersCount(event);
+};

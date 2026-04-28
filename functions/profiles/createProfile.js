@@ -81,4 +81,6 @@ const createProfile = async (event, context) => {
   }
 };
 
-module.exports.handler = createProfile;
+module.exports.handler = async (event) => {
+  return await createProfile(event);
+};

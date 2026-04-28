@@ -41,4 +41,6 @@ const getMembers = async (event, context) => {
   }
 };
 
-module.exports.handler = getMembers;
+module.exports.handler = async (event) => {
+  return await getMembers(event);
+};

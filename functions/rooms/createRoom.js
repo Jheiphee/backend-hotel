@@ -97,4 +97,6 @@ const createRoom = async (event, context) => {
   }
 };
 
-module.exports.handler = createRoom;
+module.exports.handler = async (event) => {
+  return await createRoom(event);
+};

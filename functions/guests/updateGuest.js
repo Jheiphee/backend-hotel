@@ -97,4 +97,6 @@ const updateGuest = async (event, context) => {
   }
 };
 
-module.exports.handler = updateGuest;
+module.exports.handler = async (event) => {
+  return await updateGuest(event);
+};

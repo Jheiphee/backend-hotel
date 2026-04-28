@@ -33,4 +33,6 @@ const getRooms = async (event, context) => {
   }
 };
 
-module.exports.handler = getRooms;
+module.exports.handler = async (event) => {
+  return await getRooms();
+};

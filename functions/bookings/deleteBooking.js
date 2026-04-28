@@ -47,4 +47,6 @@ const deleteBooking = async (event, context) => {
   }
 };
 
-module.exports.handler = deleteBooking;
+module.exports.handler = async (event) => {
+  return await deleteBooking(event);
+};

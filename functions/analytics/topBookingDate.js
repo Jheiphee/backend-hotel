@@ -38,4 +38,6 @@ const topBookingDate = async (event, context) => {
   }
 };
 
-module.exports.handler = topBookingDate;
+mmodule.exports.handler = async (event) => {
+  return await topBookingDate(event);
+};
