@@ -1,0 +1,12 @@
+{
+  "name": "marc-hotel-backend",
+  "version": "1.0.0",
+  "main": "handler.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node handler.js"
+  },
+  "dependencies": {
+    "pg": "^8.11.0"
+  }
+}
