@@ -22,7 +22,6 @@ package:
   individually: true
 
 functions:
-
   # 🟢 ROOMS
   getRooms:
     handler: functions/rooms/getRooms.handler
@@ -58,6 +57,7 @@ functions:
       - httpApi:
           path: /rooms/{id}
           method: DELETE
+
 
   # 🟣 PROFILES
   getProfiles:
@@ -95,6 +95,7 @@ functions:
           path: /profiles/{id}
           method: DELETE
 
+
   # 🟠 GUESTS
   getGuests:
     handler: functions/guests/getGuests.handler
@@ -130,6 +131,7 @@ functions:
       - httpApi:
           path: /guests/{id}
           method: DELETE
+
 
   # 🔵 BOOKINGS
   getBookings:
@@ -167,6 +169,7 @@ functions:
           path: /bookings/{id}
           method: DELETE
 
+
   # 🟡 PAYMENTS
   getPayments:
     handler: functions/payments/getPayments.handler
@@ -203,6 +206,7 @@ functions:
           path: /payments/{id}
           method: DELETE
 
+
   # 🟤 EMPLOYMENT
   getEmployment:
     handler: functions/employment/getEmployment.handler
@@ -217,6 +221,7 @@ functions:
       - httpApi:
           path: /employment/search
           method: GET
+
 
   # 🔴 ANALYTICS
   bestRoomBookings:
